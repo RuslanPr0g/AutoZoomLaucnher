@@ -25,6 +25,12 @@ namespace LaunchService
             _launcher = launcher;
         }
 
+        /// <summary>
+        /// TODO:
+        /// 1) Add scheduling mechanism using cron.
+        /// 2) After 41 minutes - launch meeting the second time do not stop recording
+        /// </summary>
+
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             // launch the meeting
