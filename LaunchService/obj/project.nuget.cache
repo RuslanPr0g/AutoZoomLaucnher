@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "y3kxRHaGM1L7vk3AklkIzw0jTjGwZJP/1an7ShWmRIcOeQG1DMvh7vh1ELsSicMWRbaL6cexHfz4HJt0pmtzYg==",
+  "dgSpecHash": "BEgxGu2U78pslT4xheIZrUeIKu0M0uPIVKEYAPTndHw5EGs9HUmz1zulIbo43fHHlo968M5LXp1EftT4BFBi7w==",
   "success": true,
   "projectFilePath": "C:\\Users\\theru\\Desktop\\AutoZoommer\\LaunchService\\LaunchService.csproj",
   "expectedPackageFiles": [
@@ -32,6 +32,7 @@
     "C:\\Users\\theru\\.nuget\\packages\\microsoft.netcore.platforms\\5.0.0\\microsoft.netcore.platforms.5.0.0.nupkg.sha512",
     "C:\\Users\\theru\\.nuget\\packages\\microsoft.visualstudio.azure.containers.tools.targets\\1.10.9\\microsoft.visualstudio.azure.containers.tools.targets.1.10.9.nupkg.sha512",
     "C:\\Users\\theru\\.nuget\\packages\\microsoft.win32.registry\\5.0.0\\microsoft.win32.registry.5.0.0.nupkg.sha512",
+    "C:\\Users\\theru\\.nuget\\packages\\screenrecorderlib\\3.1.1\\screenrecorderlib.3.1.1.nupkg.sha512",
     "C:\\Users\\theru\\.nuget\\packages\\system.diagnostics.eventlog\\5.0.0\\system.diagnostics.eventlog.5.0.0.nupkg.sha512",
     "C:\\Users\\theru\\.nuget\\packages\\system.security.accesscontrol\\5.0.0\\system.security.accesscontrol.5.0.0.nupkg.sha512",
     "C:\\Users\\theru\\.nuget\\packages\\system.security.principal.windows\\5.0.0\\system.security.principal.windows.5.0.0.nupkg.sha512"

@@ -1,3 +1,4 @@
+using LaunchService.Launcher;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
@@ -19,6 +20,8 @@ namespace LaunchService
                 .ConfigureServices((hostContext, services) =>
                 {
                     services.AddHostedService<Worker>();
+
+                    services.AddTransient<IMeetingLauncher, MeetingLauncher>();
                 });
     }
 }

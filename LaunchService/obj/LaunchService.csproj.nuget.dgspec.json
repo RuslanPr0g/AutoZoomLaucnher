@@ -47,6 +47,14 @@
             "Microsoft.VisualStudio.Azure.Containers.Tools.Targets": {
               "target": "Package",
               "version": "[1.10.9, )"
+            },
+            "Microsoft.Win32.Registry": {
+              "target": "Package",
+              "version": "[5.0.0, )"
+            },
+            "ScreenRecorderLib": {
+              "target": "Package",
+              "version": "[3.1.1, )"
             }
           },
           "imports": [
