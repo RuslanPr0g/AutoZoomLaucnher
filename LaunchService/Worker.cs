@@ -29,14 +29,24 @@ namespace LaunchService
         {
             // launch the meeting
 
-            await Task.Delay(4 * 1000, stoppingToken);
+            await Task.Delay(2 * 1000, stoppingToken);
+
+            Console.WriteLine("Enter a zoom link: ");
+            string ZOOM_MEETING_LINK = Console.ReadLine();
+
+            Console.WriteLine("Enter video name (without an extention): ");
+            string videoName = Console.ReadLine() + ".mp4";
+
+            Console.WriteLine("Enter duration of the video (in seconds): ");
+            int secondsToRecord = Convert.ToInt32(Console.ReadLine());
+
             _logger.LogInformation("Starting the scheduled meeeting...");
             await Task.Delay(1 * 1000, stoppingToken);
             _logger.LogInformation("Launching link in the browser...");
 
-            string ZOOM_MEETING_LINK = "https://us04web.zoom.us/j/71470382288?pwd=UWdTZFdWRkR4bE11M1JMVkJqY2ZlUT09";
+            //string ZOOM_MEETING_LINK = "https://us04web.zoom.us/j/71470382288?pwd=UWdTZFdWRkR4bE11M1JMVkJqY2ZlUT09";
             string basePath = "C:\\DISKD\\";
-            string videoName = "meeting.mp4";
+            //string videoName = "meeting.mp4";
 
             _launcher.Launch(ZOOM_MEETING_LINK);
 
@@ -46,9 +56,9 @@ namespace LaunchService
 
             _logger.LogInformation("Starting the recording of the meeeting...");
             await Task.Delay(3 * 1000, stoppingToken);
-            CreateRecording(basePath, videoName); 
+            CreateRecording(basePath, videoName);
             _logger.LogInformation("Meeting recording successfully started!");
-            await Task.Delay(30 * 1000, stoppingToken);
+            await Task.Delay(secondsToRecord * 1000, stoppingToken);
             EndRecording();
             _logger.LogInformation("Meeting recording successfully finished!");
         }
