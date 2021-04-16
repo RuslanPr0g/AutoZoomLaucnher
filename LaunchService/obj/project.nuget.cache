@@ -1,9 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "LvTzVsQy17CM3W4yCAYQTNbt2FLWXshn2/ymmcphgmoJEG47eOfKVFTYdAXEdEixZk8Xjov/oPdB/XHDBYj22g==",
+  "dgSpecHash": "NVZ0Eym9tj6sP1Kvkp982q8RUb8mW69FFZOkz9SDr1lrkZrgj9f9H5oyS3/EBmlltVW0c0m1QgMWBW1iiSXPww==",
   "success": true,
   "projectFilePath": "C:\\Users\\theru\\Desktop\\AutoZoommer\\LaunchService\\LaunchService.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\theru\\.nuget\\packages\\hangfire.aspnetcore\\1.7.22\\hangfire.aspnetcore.1.7.22.nupkg.sha512",
+    "C:\\Users\\theru\\.nuget\\packages\\hangfire.core\\1.7.22\\hangfire.core.1.7.22.nupkg.sha512",
+    "C:\\Users\\theru\\.nuget\\packages\\hangfire.memorystorage\\1.7.0\\hangfire.memorystorage.1.7.0.nupkg.sha512",
     "C:\\Users\\theru\\.nuget\\packages\\microsoft.extensions.configuration\\5.0.0\\microsoft.extensions.configuration.5.0.0.nupkg.sha512",
     "C:\\Users\\theru\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\5.0.0\\microsoft.extensions.configuration.abstractions.5.0.0.nupkg.sha512",
     "C:\\Users\\theru\\.nuget\\packages\\microsoft.extensions.configuration.binder\\5.0.0\\microsoft.extensions.configuration.binder.5.0.0.nupkg.sha512",
@@ -33,6 +36,7 @@
     "C:\\Users\\theru\\.nuget\\packages\\microsoft.netcore.targets\\1.1.0\\microsoft.netcore.targets.1.1.0.nupkg.sha512",
     "C:\\Users\\theru\\.nuget\\packages\\microsoft.visualstudio.azure.containers.tools.targets\\1.10.9\\microsoft.visualstudio.azure.containers.tools.targets.1.10.9.nupkg.sha512",
     "C:\\Users\\theru\\.nuget\\packages\\microsoft.win32.registry\\5.0.0\\microsoft.win32.registry.5.0.0.nupkg.sha512",
+    "C:\\Users\\theru\\.nuget\\packages\\newtonsoft.json\\11.0.1\\newtonsoft.json.11.0.1.nupkg.sha512",
     "C:\\Users\\theru\\.nuget\\packages\\screenrecorderlib\\3.1.1\\screenrecorderlib.3.1.1.nupkg.sha512",
     "C:\\Users\\theru\\.nuget\\packages\\system.collections\\4.3.0\\system.collections.4.3.0.nupkg.sha512",
     "C:\\Users\\theru\\.nuget\\packages\\system.diagnostics.eventlog\\5.0.0\\system.diagnostics.eventlog.5.0.0.nupkg.sha512",
