@@ -78,7 +78,7 @@ namespace AutoZoomLoaderService
                 string meetingsConfigurationPath = "C:\\DISKD\\meetingconfiguration.json";
                 string weektypesConfigurationPath = "C:\\DISKD\\weektypeconfiguration.json";
 
-                // await GenerateConfigurationMeetings(meetingsConfigurationPath, weektypesConfigurationPath);
+                 //await GenerateConfigurationMeetings(meetingsConfigurationPath, weektypesConfigurationPath);
 
                 var jsonMeetings = File.ReadAllText(meetingsConfigurationPath);
                 var meetings = new JsonFileSerializer().Deserialize<List<MeetingModel>>(jsonMeetings);
@@ -109,10 +109,127 @@ namespace AutoZoomLoaderService
                 new MeetingModel()
                 {
                     Id = 0,
-                    MeetingLink = "https://us04web.zoom.us/j/76380148912?pwd=RS96aUEvMlpHK29EenQydE1pRmUwZz09",
-                    Name = "TestMeeting1",
-                    CronSchedule = "* * * * *",
+                    MeetingLink = "",
+                    Name = "ComputerGraphics",
+                    CronSchedule = "59 4 * * 1",
                     WeekType = "Even",
+                    VideoDuration = 4900
+                },
+                new MeetingModel()
+                {
+                    Id = 1,
+                    MeetingLink = "",
+                    Name = "PKI",
+                    CronSchedule = "59 4 * * 1",
+                    WeekType = "Odd",
+                    VideoDuration = 4900
+                },
+                new MeetingModel()
+                {
+                    Id = 2,
+                    MeetingLink = "",
+                    Name = "English",
+                    CronSchedule = "44 6 * * 1",
+                    WeekType = "Any",
+                    VideoDuration = 4900
+                },
+                new MeetingModel()
+                {
+                    Id = 3,
+                    MeetingLink = "",
+                    Name = "CompGraphics",
+                    CronSchedule = "29 8 * * 1",
+                    WeekType = "Even",
+                    VideoDuration = 4900
+                },
+                new MeetingModel()
+                {
+                    Id = 4,
+                    MeetingLink = "",
+                    Name = "CompNetworks",
+                    CronSchedule = "29 8 * * 1",
+                    WeekType = "Odd",
+                    VideoDuration = 4900
+                },
+                new MeetingModel()
+                {
+                    Id = 5,
+                    MeetingLink = "",
+                    Name = "PKIoddMonday",
+                    CronSchedule = "14 8 * * 1",
+                    WeekType = "Odd",
+                    VideoDuration = 4900
+                },
+                new MeetingModel()
+                {
+                    Id = 6,
+                    MeetingLink = "",
+                    Name = "CPLUSPLUS",
+                    CronSchedule = "59 4 * * 2",
+                    WeekType = "Any",
+                    VideoDuration = 4900
+                },
+                new MeetingModel()
+                {
+                    Id = 7,
+                    MeetingLink = "",
+                    Name = "OS",
+                    CronSchedule = "29 8 * * 2",
+                    WeekType = "Even",
+                    VideoDuration = 4900
+                },
+                new MeetingModel()
+                {
+                    Id = 8,
+                    MeetingLink = "",
+                    Name = "CompNetworks",
+                    CronSchedule = "14 10 * * 2",
+                    WeekType = "Even",
+                    VideoDuration = 4900
+                },
+                new MeetingModel()
+                {
+                    Id = 9,
+                    MeetingLink = "",
+                    Name = "Fizra",
+                    CronSchedule = "59 4 * * 3",
+                    WeekType = "None",
+                    VideoDuration = 4900
+                },
+                new MeetingModel()
+                {
+                    Id = 10,
+                    MeetingLink = "",
+                    Name = "HTMLCSSJS",
+                    CronSchedule = "59 4 * * 4",
+                    WeekType = "Any",
+                    VideoDuration = 4900
+                },
+                new MeetingModel()
+                {
+                    Id = 11,
+                    MeetingLink = "",
+                    Name = "NumericalMethods",
+                    CronSchedule = "29 8 * * 4",
+                    WeekType = "Any",
+                    VideoDuration = 4900
+                },
+                new MeetingModel()
+                {
+                    Id = 12,
+                    MeetingLink = "",
+                    Name = "Politology",
+                    CronSchedule = "59 5 * * 5",
+                    WeekType = "Any",
+                    VideoDuration = 4900
+                },
+                new MeetingModel()
+                {
+                    Id = 13,
+                    MeetingLink = "",
+                    Name = "OSFriday",
+                    CronSchedule = "29 8 * * 5",
+                    WeekType = "Any",
                     VideoDuration = 4900
                 }
             };

@@ -51,8 +51,8 @@ namespace AutoZoomLoaderService
             Console.WriteLine("Meeting file name: " + meetingFileName);
 
             //int secondsToRecord = Convert.ToInt32(meetingModel.VideoDuration);
-            //const int meetingMinutesLimit = 43;
-            const int meetingMinutesLimit = 2;
+            const int meetingMinutesLimit = 43;
+            //const int meetingMinutesLimit = 2;
             int secondsToRecord = 60 * meetingMinutesLimit;
             Console.WriteLine("Duration of the video (in seconds): " + secondsToRecord);
 
@@ -73,8 +73,8 @@ namespace AutoZoomLoaderService
             Console.WriteLine("Meeting recording successfully started!");
             await Task.Delay(secondsToRecord * 1000, stoppingToken);
 
-            Console.WriteLine("Meeting finished, rejoining after 2 minutes...");
-            await Task.Delay(60 * 2 * 1000, stoppingToken);
+            Console.WriteLine("Meeting finished, rejoining after 1 minutes...");
+            await Task.Delay(60 * 1 * 1000, stoppingToken);
             Console.WriteLine("Rejoining...");
             _launcher.Launch(ZOOM_MEETING_LINK);
             Console.WriteLine("Meeting the second part launched successfully!");
