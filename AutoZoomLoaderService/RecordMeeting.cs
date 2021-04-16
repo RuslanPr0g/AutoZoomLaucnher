@@ -13,57 +13,75 @@ namespace AutoZoomLoaderService
 {
     public class RecordMeeting
     {
-        private readonly ILogger<RecordMeeting> _logger;
         private readonly IMeetingLauncher _launcher;
         private readonly ScreenRecorder _screenRecorder;
-        private readonly IBackgroundJobClient _backgroundJobClient;
 
-        public RecordMeeting(ILogger<RecordMeeting> logger,
-            IMeetingLauncher launcher, ScreenRecorder screenRecorder,
-            IBackgroundJobClient backgroundJobClient)
+        public RecordMeeting(IMeetingLauncher launcher,
+            ScreenRecorder screenRecorder)
         {
-            _logger = logger;
             _launcher = launcher;
             _screenRecorder = screenRecorder;
-            _backgroundJobClient = backgroundJobClient;
         }
 
-        public async Task Execute(MeetingModel meetingModel,
+        public async Task Execute(MeetingModel meetingModel, List<WeekTypeModel> weekTypes,
             CancellationToken stoppingToken)
         {
-            //// launching the meeting
+            if(meetingModel.WeekType != "Any")
+            {
+                var currentWeekString = DateTime.Now.Date.Month + "/" + DateTime.Now.Date.Day + "/" + DateTime.Now.Date.Year;
+                var currentWeekDate = DateTime.Parse(currentWeekString);
+                string currentWeekType = weekTypes.First(week => 
+                    currentWeekDate.Date >= week.WeekDateStart.Date &&
+                    currentWeekDate.Date < week.WeekDateEnd.Date).Type;
 
-            await Task.Delay(2 * 1000, stoppingToken);
-            Console.WriteLine("Executed successfully!");
+                if (meetingModel.WeekType != currentWeekType)
+                {
+                    Console.WriteLine("Skip this meeting, week type is different, yahoo!");
+                    return;
+                }
+            }
 
-            //Console.WriteLine("Enter a zoom link: ");
-            //string ZOOM_MEETING_LINK = Console.ReadLine();
+            // launching the meeting
 
-            //Console.WriteLine("Enter meeting name (without an extention): ");
-            //string meetingName = DateTime.Now.Date.Year + "-" + DateTime.Now.Date.Month + "-" 
-            //    + DateTime.Now.Date.Day + "_" + Console.ReadLine() + ".mp4";
+            string ZOOM_MEETING_LINK = meetingModel.MeetingLink;
+            Console.WriteLine("Zoom link: " + ZOOM_MEETING_LINK);
 
-            //Console.WriteLine("Enter duration of the video (in seconds): ");
-            //int secondsToRecord = Convert.ToInt32(Console.ReadLine());
+            string meetingFileName = DateTime.Now.Date.Year + "-" + DateTime.Now.Date.Month + "-"
+                + DateTime.Now.Date.Day + "_" + DateTime.Now.Date.Minute + "_" + meetingModel.Name + ".mp4";
+            Console.WriteLine("Meeting file name: " + meetingFileName);
 
-            //const string basePath = "C:\\DISKD\\";
+            //int secondsToRecord = Convert.ToInt32(meetingModel.VideoDuration);
+            //const int meetingMinutesLimit = 43;
+            const int meetingMinutesLimit = 2;
+            int secondsToRecord = 60 * meetingMinutesLimit;
+            Console.WriteLine("Duration of the video (in seconds): " + secondsToRecord);
 
-            //_logger.LogInformation("Starting the scheduled meeeting...");
-            //await Task.Delay(1 * 1000, stoppingToken);
-            //_logger.LogInformation("Launching link in the browser...");
+            const string basePath = "C:\\DISKD\\";
 
-            //_launcher.Launch(ZOOM_MEETING_LINK);
-            //_logger.LogInformation("Meeting launched successfully!");
+            Console.WriteLine("Starting the scheduled meeeting...");
+            await Task.Delay(1 * 1000, stoppingToken);
+            Console.WriteLine("Launching link in the browser...");
 
-            //// recording the video
+            _launcher.Launch(ZOOM_MEETING_LINK);
+            Console.WriteLine("Meeting the first part launched successfully!");
 
-            //_logger.LogInformation("Starting the recording of the meeeting...");
-            //await Task.Delay(3 * 1000, stoppingToken);
-            //_screenRecorder.CreateRecording(basePath, meetingName);
-            //_logger.LogInformation("Meeting recording successfully started!");
-            //await Task.Delay(secondsToRecord * 1000, stoppingToken);
-            //_screenRecorder.EndRecording();
-            //_logger.LogInformation("Meeting recording successfully finished!");
+            // recording the video
+
+            Console.WriteLine("Starting the recording of the meeeting...");
+            await Task.Delay(3 * 1000, stoppingToken);
+            _screenRecorder.CreateRecording(basePath, meetingFileName);
+            Console.WriteLine("Meeting recording successfully started!");
+            await Task.Delay(secondsToRecord * 1000, stoppingToken);
+
+            Console.WriteLine("Meeting finished, rejoining after 2 minutes...");
+            await Task.Delay(60 * 2 * 1000, stoppingToken);
+            Console.WriteLine("Rejoining...");
+            _launcher.Launch(ZOOM_MEETING_LINK);
+            Console.WriteLine("Meeting the second part launched successfully!");
+            await Task.Delay(secondsToRecord * 1000, stoppingToken);
+            _screenRecorder.EndRecording();
+
+            Console.WriteLine("Meeting recording successfully finished! You can find recording here: " + basePath + meetingFileName);
         }
     }
 }

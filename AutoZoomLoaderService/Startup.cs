@@ -1,6 +1,7 @@
 using AutoZoomLoaderService.Launcher;
 using AutoZoomLoaderService.Models;
 using AutoZoomLoaderService.Recorders;
+using AutoZoomLoaderService.Serializing;
 using Hangfire;
 using Hangfire.MemoryStorage;
 using Microsoft.AspNetCore.Builder;
@@ -13,6 +14,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -47,10 +49,11 @@ namespace AutoZoomLoaderService
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app,
+        public async void Configure(IApplicationBuilder app,
             IWebHostEnvironment env,
-            IBackgroundJobClient backgroundJobClient,
-            IRecurringJobManager recurringJobManager)
+            IRecurringJobManager recurringJobManager,
+            IMeetingLauncher meetingLauncher,
+            ScreenRecorder screenRecorder)
         {
             if (env.IsDevelopment())
             {
@@ -69,21 +72,114 @@ namespace AutoZoomLoaderService
             });
 
             app.UseHangfireDashboard();
-            backgroundJobClient.Enqueue(() =>
-                Console.WriteLine("Good, good, bu' could be better than tha'"));
 
-            // Configure jobs for the meetings
-            // 1) read the config file with meetings
-            // 2) deserialize them into the list of meeting models
-            // 3) using loop statement go through all of the meetings and create job for each of them
+            try
+            {
+                string meetingsConfigurationPath = "C:\\DISKD\\meetingconfiguration.json";
+                string weektypesConfigurationPath = "C:\\DISKD\\weektypeconfiguration.json";
 
+                // await GenerateConfigurationMeetings(meetingsConfigurationPath, weektypesConfigurationPath);
 
+                var jsonMeetings = File.ReadAllText(meetingsConfigurationPath);
+                var meetings = new JsonFileSerializer().Deserialize<List<MeetingModel>>(jsonMeetings);
 
-            recurringJobManager.AddOrUpdate(
-                    "Run every minute",
-                    () => Console.WriteLine("That's bettter dude!"),
-                    "* * * * *"
-                );
+                var jsonWeekTypes = File.ReadAllText(weektypesConfigurationPath);
+                var weekTypes = new JsonFileSerializer().Deserialize<List<WeekTypeModel>>(jsonWeekTypes);
+
+                foreach (var meeting in meetings)
+                {
+                    recurringJobManager.AddOrUpdate(
+                        meeting.Id + "_" + meeting.Name,
+                        () => new RecordMeeting(meetingLauncher, screenRecorder)
+                            .Execute(meeting, weekTypes, CancellationToken.None),
+                        meeting.CronSchedule
+                    );
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                throw;
+            }
+        }
+
+        private async Task GenerateConfigurationMeetings(string meetingConfigurationPath, string weektypesConfigurationPath)
+        {
+            var meetings = new List<MeetingModel>() {
+                new MeetingModel()
+                {
+                    Id = 0,
+                    MeetingLink = "https://us04web.zoom.us/j/76380148912?pwd=RS96aUEvMlpHK29EenQydE1pRmUwZz09",
+                    Name = "TestMeeting1",
+                    CronSchedule = "* * * * *",
+                    WeekType = "Even",
+                    VideoDuration = 4900
+                }
+            };
+
+            var weekTypes = new List<WeekTypeModel>()
+            {
+                new WeekTypeModel()
+                {
+                    WeekDateStart = DateTime.Parse("4/12/2021"),
+                    WeekDateEnd = DateTime.Parse("4/19/2021"),
+                    Type = "Even"
+                },
+                new WeekTypeModel()
+                {
+                    WeekDateStart = DateTime.Parse("4/19/2021"),
+                    WeekDateEnd = DateTime.Parse("4/26/2021"),
+                    Type = "Odd"
+                },
+                new WeekTypeModel()
+                {
+                    WeekDateStart = DateTime.Parse("4/26/2021"),
+                    WeekDateEnd = DateTime.Parse("5/3/2021"),
+                    Type = "Even"
+                },
+                new WeekTypeModel()
+                {
+                    WeekDateStart = DateTime.Parse("5/3/2021"),
+                    WeekDateEnd = DateTime.Parse("5/10/2021"),
+                    Type = "Odd"
+                },
+                new WeekTypeModel()
+                {
+                    WeekDateStart = DateTime.Parse("5/10/2021"),
+                    WeekDateEnd = DateTime.Parse("5/17/2021"),
+                    Type = "Even"
+                },
+                new WeekTypeModel()
+                {
+                    WeekDateStart = DateTime.Parse("4/19/2021"),
+                    WeekDateEnd = DateTime.Parse("4/26/2021"),
+                    Type = "Odd"
+                },
+                new WeekTypeModel()
+                {
+                    WeekDateStart = DateTime.Parse("5/17/2021"),
+                    WeekDateEnd = DateTime.Parse("5/24/2021"),
+                    Type = "Even"
+                },
+                new WeekTypeModel()
+                {
+                    WeekDateStart = DateTime.Parse("5/24/2021"),
+                    WeekDateEnd = DateTime.Parse("5/31/2021"),
+                    Type = "Odd"
+                },
+                new WeekTypeModel()
+                {
+                    WeekDateStart = DateTime.Parse("5/31/2021"),
+                    WeekDateEnd = DateTime.Parse("6/7/2021"),
+                    Type = "Even"
+                },
+            };
+
+            var jsonFileButesWithMeetings = await new JsonFileSerializer().Serialize(meetings);
+            var jsonFileButesWithWeekTypes = await new JsonFileSerializer().Serialize(weekTypes);
+
+            File.WriteAllBytes(meetingConfigurationPath, jsonFileButesWithMeetings);
+            File.WriteAllBytes(weektypesConfigurationPath, jsonFileButesWithWeekTypes);
         }
     }
 }
