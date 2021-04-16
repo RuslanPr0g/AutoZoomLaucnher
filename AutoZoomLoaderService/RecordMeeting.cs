@@ -1,23 +1,24 @@
+﻿using AutoZoomLoaderService.Launcher;
+using AutoZoomLoaderService.Models;
+using AutoZoomLoaderService.Recorders;
 using Hangfire;
-using LaunchService.Launcher;
-using LaunchService.Models;
-using LaunchService.Recorders;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace LaunchService
+namespace AutoZoomLoaderService
 {
-    public class Worker : BackgroundService
+    public class RecordMeeting
     {
-        private readonly ILogger<Worker> _logger;
+        private readonly ILogger<RecordMeeting> _logger;
         private readonly IMeetingLauncher _launcher;
         private readonly ScreenRecorder _screenRecorder;
         private readonly IBackgroundJobClient _backgroundJobClient;
 
-        public Worker(ILogger<Worker> logger,
+        public RecordMeeting(ILogger<RecordMeeting> logger,
             IMeetingLauncher launcher, ScreenRecorder screenRecorder,
             IBackgroundJobClient backgroundJobClient)
         {
@@ -27,20 +28,13 @@ namespace LaunchService
             _backgroundJobClient = backgroundJobClient;
         }
 
-        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+        public async Task Execute(MeetingModel meetingModel,
+            CancellationToken stoppingToken)
         {
-            // configure the jobs
-
-            _backgroundJobClient.Enqueue(() => Console.WriteLine("It's me, Autozoomer!"));
-
-            // ...
-
-
-
-
             //// launching the meeting
 
-            //await Task.Delay(2 * 1000, stoppingToken);
+            await Task.Delay(2 * 1000, stoppingToken);
+            Console.WriteLine("Executed successfully!");
 
             //Console.WriteLine("Enter a zoom link: ");
             //string ZOOM_MEETING_LINK = Console.ReadLine();
