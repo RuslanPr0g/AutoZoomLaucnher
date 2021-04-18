@@ -47,16 +47,16 @@ namespace AutoZoomLoaderService
             Console.WriteLine("Zoom link: " + ZOOM_MEETING_LINK);
 
             string meetingFileName = DateTime.Now.Date.Year + "-" + DateTime.Now.Date.Month + "-"
-                + DateTime.Now.Date.Day + "_" + DateTime.Now.Date.Minute + "_" + meetingModel.Name + ".mp4";
+                + DateTime.Now.Date.Day + "_" + new Random().Next(4983) + "_" + meetingModel.Name + ".mp4";
             Console.WriteLine("Meeting file name: " + meetingFileName);
 
             //int secondsToRecord = Convert.ToInt32(meetingModel.VideoDuration);
-            const int meetingMinutesLimit = 43;
+            const int meetingMinutesLimit = 42;
             //const int meetingMinutesLimit = 2;
             int secondsToRecord = 60 * meetingMinutesLimit;
-            Console.WriteLine("Duration of the video (in seconds): " + secondsToRecord);
+            Console.WriteLine("Duration of the video (in minutes): " + meetingMinutesLimit * 2);
 
-            const string basePath = "C:\\DISKD\\";
+            const string basePath = "D:\\videoszoommeetings\\";
 
             Console.WriteLine("Starting the scheduled meeeting...");
             await Task.Delay(1 * 1000, stoppingToken);
